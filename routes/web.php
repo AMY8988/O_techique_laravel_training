@@ -1,10 +1,8 @@
 <?php
 
-use App\Http\Controllers\ItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Http;
 
 /*
@@ -18,26 +16,12 @@ use Illuminate\Support\Facades\Http;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+})->name('home');
 
-
-//Route::get('/', function () {
-//    return view('welcome');
-//})->name('home');
-//
-//Route::get('login' , [ LoginController::class , 'index'])->name('login');
-//Route::get('register' , [ \App\Http\Controllers\RegisterController::class , 'index'])->name('register');
-
-
-Route::get( '/' , [ PageController::class , 'home'])->name('page.home');
-Route::get( '/inventory' , [ItemController::class , 'index'])->name('item.index');
-Route::post( '/inventory' , [ItemController::class , 'store'])->name('item.store');
-Route::get( '/inventory/create' , [ItemController::class , 'create'])->name('item.create');
-Route::get( '/inventory/{id}' , [ItemController::class , 'show'])->name('item.show');
-Route::get( '/inventory/{id}/edit' , [ItemController::class , 'edit'])->name('item.edit');
-Route::put( '/inventory/{id}' , [ItemController::class , 'update'])->name('item.update');
-Route::delete('/inventory/{id}' , [ItemController::class , 'destory'])->name('item.destory');
-
-Route::get('/deleted' , [ItemController::class , 'deleted'])->name("item.deleted");
+Route::get('login' , [ LoginController::class , 'index'])->name('login');
+Route::get('register' , [ \App\Http\Controllers\RegisterController::class , 'index'])->name('register');
 
 
 
