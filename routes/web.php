@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Http;
 
 /*
@@ -21,7 +23,19 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('login' , [ LoginController::class , 'index'])->name('login');
-Route::get('register' , [ \App\Http\Controllers\RegisterController::class , 'index'])->name('register');
+Route::get('register' , [ RegisterController::class , 'index'])->name('register.index');
+
+
+Route::controller(UserController::class)->group(function(){
+    Route::get('/user' , 'index')->name('user.index');
+    Route::post('/user' , 'create')->name('user.create');
+    Route::get('/user/{id}' , 'show')->name('user.show');
+    Route::delete('/user/{id}' , 'destroy')->name('user.destroy');
+    Route::get('/bin' ,   'bin')->name('user.bin');
+    Route::get('/restore/{id}' , 'restore')->name('user.restore');
+});
+
+
 
 
 
