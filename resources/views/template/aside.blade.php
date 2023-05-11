@@ -9,4 +9,11 @@
         <a href="{{ route('user.bin') }}" class=" list-group-item list-group-item-action">User Bin</a>
 
     </div>
+
+    <p class=" fw-bold mt-3 my-2">Posts Management</p>
+    <div class="list-group">
+        <a href="{{ route('post.create') }}" class=" list-group-item list-group-item-action">Post Create</a>
+        <a href="{{ route('post.index') }}" class=" list-group-item list-group-item-action">Post List</a>
+
+    </div>
 </div>

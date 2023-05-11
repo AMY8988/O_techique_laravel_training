@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\datetimeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Http;
@@ -35,6 +37,10 @@ Route::controller(UserController::class)->group(function(){
     Route::get('/restore/{id}' , 'restore')->name('user.restore');
 });
 
+Route::resource('post' , PostController::class);
+
+Route::get('/datetime' , [datetimeController::class , 'datetime']);
+
 
 
 
@@ -51,7 +57,7 @@ Route::controller(UserController::class)->group(function(){
 //    return "Search $search and These are the results of page number $page" ;
 // });
 
-// Route::get('users/{id}' ,  function($id){
+// Route::get('users/{id?}' ,  function($id = null){
 //     return "This is user " . $id;
 // });
 

@@ -10,15 +10,15 @@ class UserController extends Controller
     //
 
     public function index(){
-        $users = User::all();
+        $users = User::Mr()->get();
         return view('user.index' , compact('users'));
     }
 
     public function create(Request $request){
 
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
+            'name' => 'required|unique:users,name',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed|min:4'
         ]);
 
@@ -26,13 +26,14 @@ class UserController extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = $request->password;
+        $user->password = bcrypt($request->password);
         $user->save();
 
         return redirect()->route('home');
     }
 
     public function show($id){
+
         $user = User::findOrFail($id);
         return view('user.show' , compact('user'));
     }
@@ -52,7 +53,7 @@ class UserController extends Controller
 
     public function restore($id){
         User::withTrashed()->where('id' , $id)->restore();
-        return redirect()->route('user.index');
+        return redirect()->back();
     }
 
 
