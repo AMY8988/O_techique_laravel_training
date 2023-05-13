@@ -23,6 +23,12 @@
                         <td>
                             <a href=" {{ route('user.restore', $user->id) }} "
                                 class="  btn btn-sm btn-outline-primary">restore</a>
+                            <form class="d-inline-block" action="{{route('user.clearHistory' , $user->id)}}" method="post">
+                                @csrf
+                                @method('delete')
+
+                                <button class="btn btn-sm btn-outline-info" >Clear</button>
+                            </form>
 
                         </td>
                     </tr>

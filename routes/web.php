@@ -35,6 +35,7 @@ Route::controller(UserController::class)->group(function(){
     Route::delete('/user/{id}' , 'destroy')->name('user.destroy');
     Route::get('/bin' ,   'bin')->name('user.bin');
     Route::get('/restore/{id}' , 'restore')->name('user.restore');
+    Route::delete('/clearHistory/{id}' , 'clearHistory')->name('user.clearHistory');
 });
 
 Route::resource('post' , PostController::class);

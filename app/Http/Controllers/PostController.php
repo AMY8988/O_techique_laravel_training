@@ -9,6 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -75,6 +76,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+
         $post->delete();
         return redirect()->back();
     }

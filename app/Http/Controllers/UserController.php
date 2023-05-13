@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Scopes\TestScope;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -31,7 +32,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
 
-        if(isset($request->imgUpload)){
+        if($request->hasFile('imgUpload')){
              $fileName = time(). "_" . $request->file('imgUpload')->getClientOriginalName();
              $request->file('imgUpload')->storeAs('uploads' , $fileName , 'public');
              $user->imgUpload = $fileName;
@@ -49,8 +50,10 @@ class UserController extends Controller
     }
 
     public function destroy($id){
+
         $user = User::findOrFail($id);
         $user->delete();
+
 
         return redirect()->route('user.index');
     }
@@ -64,6 +67,14 @@ class UserController extends Controller
     public function restore($id){
         User::withTrashed()->where('id' , $id)->restore();
         return redirect()->back();
+    }
+
+    public function clearHistory($id){
+
+        $user = User::onlyTrashed()->find($id);
+        Storage::delete('public/uploads/'.$user->imgUpload);
+        $user->forceDelete();
+        return 'success';
     }
 
 
