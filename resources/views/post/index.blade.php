@@ -26,6 +26,8 @@
                         <td> {{ Str::limit($post->title, 10, '...') }} </td>
                         <td > {{ Str::limit($post->description, 20, '...') }} </td>
                         <td> {{ $post->user->name }} </td>
+                        {{-- <td> @dump($post->user) </td> --}}
+
                         <td >
                             <a href=" {{ route('post.show', $post->id) }} "
                                 class="  btn btn-sm btn-outline-primary">detail</a>

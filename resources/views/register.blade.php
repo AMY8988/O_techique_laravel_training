@@ -3,7 +3,7 @@
 @section('content')
     <div class="col-9 border rounded m-auto">
         <h5 class="bg-light p-2 py-3">Registor</h5>
-        <form action="{{ route('user.create') }}" method="post">
+        <form action="{{ route('user.create') }}" method="post" enctype="multipart/form-data">
             @csrf
 
             <div class="bg-white  p-3 px-4">
@@ -43,6 +43,15 @@
                     <div class="col-8">
                         <input type="password" class="form-control " name="password_confirmation"
                             placeholder="confirm password">
+                    </div>
+                </div>
+                <div class="row align-items-start my-4">
+                    <label for="" class="col-4">Image Upload</label>
+                    <div class="col-8">
+                        <input type="file" class="form-control " name="imgUpload">
+                        {{-- @error('password')
+                            <div class=" invalid-feedback">{{ $message }}</div>
+                        @enderror --}}
                     </div>
                 </div>
 

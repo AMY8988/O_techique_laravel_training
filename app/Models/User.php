@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\Scopes\TestScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -56,7 +57,13 @@ class User extends Authenticatable
         $query->where('name', 'like', 'Mr%');
     }
 
-    
+    //global scope
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new TestScope);
+    }
+
+
     protected $fillable = [
         'name',
         'email',

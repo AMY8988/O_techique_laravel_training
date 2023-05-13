@@ -24,11 +24,7 @@
                         <td>
                             <a href=" {{ route('user.show', $user->id) }} "
                                 class="  btn btn-sm btn-outline-primary">detail</a>
-                            <form action="{{ route('user.destroy', $user->id) }}" method="post" class=" d-inline-block">
-                                @method('delete')
-                                @csrf
-                                <button class="btn btn-sm btn-outline-danger">Delete</button>
-                            </form>
+                            
                         </td>
                     </tr>
                 @empty

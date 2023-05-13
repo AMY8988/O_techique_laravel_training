@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Scopes\TestScope;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -10,7 +11,8 @@ class UserController extends Controller
     //
 
     public function index(){
-        $users = User::Mr()->get();
+        //retrieve global and local scope
+        $users = User::all();
         return view('user.index' , compact('users'));
     }
 
@@ -23,10 +25,18 @@ class UserController extends Controller
         ]);
 
 
+
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
+
+        if(isset($request->imgUpload)){
+             $fileName = time(). "_" . $request->file('imgUpload')->getClientOriginalName();
+             $request->file('imgUpload')->storeAs('uploads' , $fileName , 'public');
+             $user->imgUpload = $fileName;
+        }
+
         $user->save();
 
         return redirect()->route('home');
@@ -42,7 +52,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->back();
+        return redirect()->route('user.index');
     }
 
     public function bin(){

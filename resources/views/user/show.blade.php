@@ -5,8 +5,9 @@
         @include('template.aside')
     </div>
 
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-6 mb-5">
         <h5 class="bg-light p-2 py-3">User Detail</h5>
+        <img src="{{ asset('storage/uploads/'.$user->imgUpload) }}" alt="">
         <table class="table ">
             <tr>
                 <th>Id</th>
@@ -25,5 +26,12 @@
                 <td> {{ $user->password }} </td>
             </tr>
         </table>
+        <form action="{{ route('user.destroy', $user->id) }}" method="post" class="">
+            @method('delete')
+            @csrf
+            <button class="btn btn-sm btn-outline-danger">Delete</button>
+        </form>
     </div>
+
+
 @endsection
