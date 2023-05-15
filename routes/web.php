@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\datetimeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Http;
 |
 */
 
-Route::middleware('test')->get('/', function () {
+Route::middleware('auth:admin')->get('/', function () {
     return view('welcome');
 })->name('home');
 
@@ -40,7 +41,9 @@ Route::controller(UserController::class)->group(function(){
     Route::delete('/clearHistory/{id}' , 'clearHistory')->name('user.clearHistory');
 });
 
-Route::resource('post' , PostController::class)->middleware('test');
+Route::resource('post' , PostController::class);
+Route::post('/adminLogin' , [AdminController::class , 'login'])->name('admin.login');
+Route::post('/adminLogout' , [AdminController::class , 'logout'])->name('admin.logout');
 
 Route::get('/datetime' , [datetimeController::class , 'datetime']); // testing carbon
 

@@ -3,7 +3,7 @@
 @section('content')
     <div class="col-9 m-auto border rounded">
         <h5 class="bg-light p-2 py-3">Login</h5>
-        <form action="{{ route('user.login')}}" method="post">
+        <form action="{{ route('admin.login')}}" method="post">
             @csrf
             <div class="bg-white  p-3 px-4">
                 <div class="row align-items-center my-4">
