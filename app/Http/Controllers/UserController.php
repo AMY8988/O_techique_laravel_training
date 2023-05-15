@@ -12,24 +12,24 @@ class UserController extends Controller
 {
     //
 
-    // public function login(Request $request){
-    //     $credentials = [
-    //         'email' => $request->email,
-    //         'password' => $request->password
-    //     ];
+    public function login(Request $request){
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password
+        ];
 
-    //     if(Auth::attempt($credentials)){
-    //         return redirect()->route('home');
-    //     }else{
-    //         return redirect()->route('login');
-    //     }
+        if(Auth::attempt($credentials)){
+            return redirect()->route('home');
+        }else{
+            return redirect()->route('login');
+        }
 
-    // }
+    }
 
-    // public function logout(){
-    //     auth()->logout();
-    //     return redirect()->route('login');
-    // }
+    public function logout(){
+        auth()->logout();
+        return redirect()->route('login');
+    }
 
     public function index(){
         //retrieve global and local scope
