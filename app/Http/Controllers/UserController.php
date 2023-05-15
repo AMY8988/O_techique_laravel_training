@@ -5,11 +5,31 @@ namespace App\Http\Controllers;
 use App\Models\Scopes\TestScope;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
     //
+
+    public function login(Request $request){
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password
+        ];
+
+        if(Auth::attempt($credentials)){
+            return redirect()->route('home');
+        }else{
+            return redirect()->route('login');
+        }
+
+    }
+
+    public function logout(){
+        auth()->logout();
+        return redirect()->route('login');
+    }
 
     public function index(){
         //retrieve global and local scope

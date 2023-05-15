@@ -17,7 +17,7 @@ class TestMiddleware
     public function handle(Request $request, Closure $next)
     {
 
-         echo "Testing Middleware";
+        
         return $next($request);
     }
 }

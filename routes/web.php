@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Http;
 |
 */
 
-Route::get('/', function () {
+Route::middleware('test')->get('/', function () {
     return view('welcome');
 })->name('home');
 
@@ -29,6 +29,8 @@ Route::get('register' , [ RegisterController::class , 'index'])->name('register.
 
 
 Route::controller(UserController::class)->group(function(){
+    Route::post('/userLogin' , 'login')->name('user.login');
+    Route::post('/userLogout' , 'logout')->name('user.logout');
     Route::get('/user' , 'index')->name('user.index');
     Route::post('/user' , 'create')->name('user.create');
     Route::get('/user/{id}' , 'show')->name('user.show');
@@ -40,7 +42,7 @@ Route::controller(UserController::class)->group(function(){
 
 Route::resource('post' , PostController::class)->middleware('test');
 
-Route::get('/datetime' , [datetimeController::class , 'datetime']);
+Route::get('/datetime' , [datetimeController::class , 'datetime']); // testing carbon
 
 
 
