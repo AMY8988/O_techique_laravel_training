@@ -38,7 +38,7 @@ Route::controller(UserController::class)->group(function(){
     Route::delete('/clearHistory/{id}' , 'clearHistory')->name('user.clearHistory');
 });
 
-Route::resource('post' , PostController::class);
+Route::resource('post' , PostController::class)->middleware('test');
 
 Route::get('/datetime' , [datetimeController::class , 'datetime']);
 
