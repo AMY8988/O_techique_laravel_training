@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\datetimeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Http;
 |
 */
 
-Route::middleware('test')->get('/', function () {
+Route::middleware('auth:admin')->get('/', function () {
     return view('welcome');
 })->name('home');
 
@@ -28,7 +29,7 @@ Route::get('login' , [ LoginController::class , 'index'])->name('login');
 Route::get('register' , [ RegisterController::class , 'index'])->name('register.index');
 
 
-Route::controller(UserController::class)->group(function(){
+Route::middleware('auth')->controller(UserController::class)->group(function(){
     Route::post('/userLogin' , 'login')->name('user.login');
     Route::post('/userLogout' , 'logout')->name('user.logout');
     Route::get('/user' , 'index')->name('user.index');
@@ -40,7 +41,10 @@ Route::controller(UserController::class)->group(function(){
     Route::delete('/clearHistory/{id}' , 'clearHistory')->name('user.clearHistory');
 });
 
-Route::resource('post' , PostController::class)->middleware('test');
+Route::post('adminLogin' , [AdminController::class , 'loginCheck'])->name('admin.loginCheck');
+Route::post( 'adminLogout' , [AdminController::class , 'logOut'])->name('admin.logOut');
+
+Route::resource('post' , PostController::class);
 
 Route::get('/datetime' , [datetimeController::class , 'datetime']); // testing carbon
 

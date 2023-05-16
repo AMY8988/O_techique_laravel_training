@@ -28,13 +28,14 @@
                         </button>
                         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                             <ul class="navbar-nav  mb-2 mb-lg-0">
-                            @auth
+
+                            @auth('admin')
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                  {{ auth()->user()->name }}
+                                    {{auth()->guard('admin')->user()->name}}
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <form action="{{route('user.logout')}}" method="post">
+                                    <form action="{{route('admin.logOut')}}" method="post">
                                         @csrf
                                         <li class="nav-item">
                                             <button class="nav-link btn btn-sm border border-0 active" aria-current="page" >Logout</button>
@@ -43,10 +44,9 @@
                                     </form>
                                 </ul>
                               </div>
-
                             @endauth
 
-                            @guest
+                            @guest('admin')
                                 <li class="nav-item">
                                     <a class="nav-link active" aria-current="page" href="{{ route('login') }}">Login</a>
                                 </li>
