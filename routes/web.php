@@ -21,15 +21,24 @@ use Illuminate\Support\Facades\Http;
 |
 */
 
+
 Route::middleware('auth:admin')->get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('login' , [ LoginController::class , 'index'])->name('login');
-Route::get('register' , [ RegisterController::class , 'index'])->name('register.index');
 
 
-Route::middleware('auth')->controller(UserController::class)->group(function(){
+Route::middleware('authed')->group(function(){
+    Route::get('login' , [ LoginController::class , 'index'])->name('login');
+    Route::get('register' , [ RegisterController::class , 'index'])->name('register.index');
+});
+
+Route::post('adminLogin' , [AdminController::class , 'loginCheck'])->name('admin.loginCheck');
+Route::post( 'adminLogout' , [AdminController::class , 'logOut'])->name('admin.logOut');
+
+
+// User
+Route::middleware([ 'auth:admin','isOwner'])->controller(UserController::class)->group(function(){
     Route::post('/userLogin' , 'login')->name('user.login');
     Route::post('/userLogout' , 'logout')->name('user.logout');
     Route::get('/user' , 'index')->name('user.index');
@@ -41,12 +50,13 @@ Route::middleware('auth')->controller(UserController::class)->group(function(){
     Route::delete('/clearHistory/{id}' , 'clearHistory')->name('user.clearHistory');
 });
 
-Route::post('adminLogin' , [AdminController::class , 'loginCheck'])->name('admin.loginCheck');
-Route::post( 'adminLogout' , [AdminController::class , 'logOut'])->name('admin.logOut');
 
-Route::resource('post' , PostController::class);
+//post
+Route::middleware([ 'auth:admin','isOwner'])->resource('post' , PostController::class);
 
-Route::get('/datetime' , [datetimeController::class , 'datetime']); // testing carbon
+
+//Testing Carbon
+Route::get('/datetime' , [datetimeController::class , 'datetime']);
 
 
 

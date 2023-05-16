@@ -4,24 +4,20 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class TestMiddleware
+class is_ownerMiddleware
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
-
-        if(Auth::guard('admin')->user()){
-            return redirect()->route('home');
-        }else{
-            return $next($request);
+        if(!auth()->guard('admin')->user()->is_owner){
+            return abort(404);
         }
-
+        return $next($request);
     }
 }
